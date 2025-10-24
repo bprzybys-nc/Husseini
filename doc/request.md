@@ -2,7 +2,7 @@ Refined Approach: Multi-Agent Pattern Over Model Fine-Tuning
 
 ## Core Insight
 
-The original proposal suggests training a fine-tuned GAN/Multimodal model. A superior approach uses **multi-agent orchestration with iterative prompt refinement** instead—no model training required.
+The original proposal suggests training a fine-tuned GAN/Multimodal model. An alternative approach worth considering: **multi-agent orchestration with iterative prompt refinement**—no model training required. Both paths are viable; this explores different trade-offs.
 
 ---
 
@@ -23,7 +23,7 @@ graph TD
     style E fill:#e8f5e9
 ```
 
-**Key mechanism**: Each iteration improves the prompt and context, not the underlying model weights.
+**How it works**: Each iteration improves the prompt and context, reducing dependency on model retraining.
 
 ---
 
@@ -31,12 +31,12 @@ graph TD
 
 | Factor | Fine-Tuned Model | Multi-Agent Pattern |
 |--------|---|---|
-| Cost | High infrastructure investment | Low - API call costs only |
+| Infrastructure | Custom GPU compute pipeline | Hosted LLM APIs |
 | Time to market | 3-6 months | 2-4 weeks |
-| Maintenance | Complex retraining cycles | Simple prompt updates |
-| Flexibility | Locked after training | Iterate anytime |
-| Scalability | Expensive compute | Leverage existing LLM |
-| Dependency risk | Custom infrastructure | Leverage proven LLMs |
+| Iteration cycle | Requires retraining | Prompt updates only |
+| Flexibility | Fixed post-training | Continuous adaptation |
+| Scalability | Dedicated compute scaling | API-based scaling |
+| Vendor dependency | Build custom stack | Leverage market leaders |
 
 ---
 
@@ -52,13 +52,13 @@ No fine-tuning required. Build with:
 
 ---
 
-## 4. The Real Competitive Advantage
+## 4. Competitive Differentiation
 
-The original proposal claimed differentiation through a fine-tuned model. **The actual differentiation is:**
+Regardless of implementation path chosen, the core differentiation lies in:
 
-- High-quality structured prompts
-- Multi-agent orchestration patterns
+- High-quality structured prompts tailored to architecture analysis
+- Multi-agent orchestration and coordination logic
 - Access to Nordcloud's proprietary case study database
-- Iterative refinement framework
+- Iterative refinement frameworks proven in production
 
-This is **not about the model—it is about the patterns and the knowledge base**.
+The knowledge base and execution patterns are what create lasting competitive value—not the underlying model infrastructure.
