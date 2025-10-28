@@ -1,6 +1,0 @@
-Hi Blazej (also apologies for butchering your name spelled like that),
-@Kasia Z. sent me your way as i was pitching a possible AI product to her and she felt that you're more qualified to chat and discuss with.
-What if we had a GAN/Multimodal Model that sits in a CSP. The model is fine tuned to just Architectural diagrams and decisions from NC's customer engagements (our choices for Finnair, BMW, Swiss Post... etc etc). We launch this as a subscription model for people as Platinum (Defence orgs and sensitive customers pricing plan), Gold (FSIs and Banks pricing plan), Silver (Private sector pricing plan), Bronze (public sector and cash strapped plan).
-Think Gemini but on steroids. The customer team feed it an architecture diagram and asks it to find flaws or issues and based on that experience it redraws or provides insight. The costs aren't like training from scratch as we're fine tuning/augmenting like it's RAG. Its kinda half the cost if we're smart about it
-What do you think?
-This could be the NC AI product we've been chasing. Its home-grown instead of Ovoura or ICA from IBM (edited) 
