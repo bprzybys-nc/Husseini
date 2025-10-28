@@ -137,9 +137,17 @@ check_git_status() {
 
     local has_uncommitted=0
     local repos_with_changes=()
+    local skip_repo="$HOME/nc-src/Husseini-feat-global-reset-prep"
 
     while IFS= read -r -d '' git_dir; do
         local project_dir=$(dirname "$git_dir")
+
+        # Skip current repo
+        if [ "$project_dir" = "$skip_repo" ]; then
+            warn "SKIP: $project_dir (active working repo)"
+            continue
+        fi
+
         cd "$project_dir"
 
         # Check for any uncommitted changes
@@ -215,17 +223,22 @@ find_garbage_files() {
     categories[logs]=0
     categories[nested_backup]=0
 
+    local skip_repo="$HOME/nc-src/Husseini-feat-global-reset-prep"
+
     # Initialize manifest
     > "$DELETION_MANIFEST"
 
     # .DS_Store files
     while IFS= read -r file; do
+        # Skip current repo
+        [[ "$file" == "$skip_repo"* ]] && continue
         echo "ds_store|$file" >> "$DELETION_MANIFEST"
         ((categories[ds_store]++))
     done < <(find "$NC_SRC_DIR" -name ".DS_Store" -type f 2>/dev/null)
 
     # __pycache__ directories
     while IFS= read -r dir; do
+        [[ "$dir" == "$skip_repo"* ]] && continue
         if ! is_symlink "$dir"; then
             echo "pycache|$dir" >> "$DELETION_MANIFEST"
             ((categories[pycache]++))
@@ -234,6 +247,7 @@ find_garbage_files() {
 
     # .pytest_cache directories
     while IFS= read -r dir; do
+        [[ "$dir" == "$skip_repo"* ]] && continue
         if ! is_symlink "$dir"; then
             echo "pytest_cache|$dir" >> "$DELETION_MANIFEST"
             ((categories[pytest_cache]++))
@@ -242,6 +256,7 @@ find_garbage_files() {
 
     # .mypy_cache directories
     while IFS= read -r dir; do
+        [[ "$dir" == "$skip_repo"* ]] && continue
         if ! is_symlink "$dir"; then
             echo "mypy_cache|$dir" >> "$DELETION_MANIFEST"
             ((categories[mypy_cache]++))
@@ -250,6 +265,7 @@ find_garbage_files() {
 
     # .venv and venv directories
     while IFS= read -r dir; do
+        [[ "$dir" == "$skip_repo"* ]] && continue
         if ! is_symlink "$dir"; then
             echo "venv|$dir" >> "$DELETION_MANIFEST"
             ((categories[venv]++))
@@ -258,6 +274,7 @@ find_garbage_files() {
 
     # node_modules directories (check for monorepos)
     while IFS= read -r dir; do
+        [[ "$dir" == "$skip_repo"* ]] && continue
         if ! is_symlink "$dir"; then
             local project_dir=$(dirname "$dir")
 
@@ -274,6 +291,7 @@ find_garbage_files() {
 
     # dist and build directories (with .gitignore validation)
     while IFS= read -r dir; do
+        [[ "$dir" == "$skip_repo"* ]] && continue
         if ! is_symlink "$dir"; then
             local project_dir=$(dirname "$dir")
             local dir_name=$(basename "$dir")
@@ -295,6 +313,7 @@ find_garbage_files() {
 
     # Log files older than 30 days (conservative patterns)
     while IFS= read -r file; do
+        [[ "$file" == "$skip_repo"* ]] && continue
         if [[ "$file" == *.log ]] && [ -f "$file" ]; then
             local age_days=$(( ( $(date +%s) - $(stat -f %m "$file" 2>/dev/null || stat -c %Y "$file") ) / 86400 ))
             if [ $age_days -gt 30 ]; then
